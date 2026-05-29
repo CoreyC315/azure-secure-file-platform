@@ -1,0 +1,55 @@
+# .github/workflows/app.yml
+# APPLICATION pipeline (frequent, low-risk changes -> auto-deploy). Kept SEPARATE from
+# the infra pipeline because app code changes far more often and doesn't need the same
+# approval gate.
+#
+# Flow:
+#   push/PR touching app/ -> pytest  ->  (on main) deploy function code to Azure
+#
+# Auth: same OIDC federation as infra. NO secrets stored.
+#
+# STATUS: scaffold — test job runs today; deploy job is commented until milestone 4/7.
+
+name: app
+
+on:
+  pull_request:
+    paths: ["app/**", "pyproject.toml", ".github/workflows/app.yml"]
+  push:
+    branches: ["main"]
+    paths: ["app/**", "pyproject.toml", ".github/workflows/app.yml"]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test deps
+        run: pip install pytest
+      - name: Run unit tests
+        run: pytest          # config in pyproject.toml (pythonpath=app, testpaths=app/tests)
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # - uses: azure/login@v2
+      #   with:
+      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
+      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
+      #     subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      # - uses: Azure/functions-action@v1
+      #   with:
+      #     app-name: <function-app-name>
+      #     package: app
+      - name: placeholder
+        run: echo "TODO(milestone 4/7): enable function deploy once the app is implemented"

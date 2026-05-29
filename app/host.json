@@ -1,0 +1,16 @@
+{
+  "//": "host.json — Azure Functions host runtime config. Controls logging, the App Insights sampling, and extension bundle versions for the whole function app.",
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[4.*, 5.0.0)"
+  }
+}

@@ -1,0 +1,6 @@
+# app/requirements.txt — Python dependencies for the Function App.
+# Pinned loosely; lock exact versions when you first deploy (milestone 4).
+azure-functions
+azure-identity      # DefaultAzureCredential -> managed identity, no secrets
+azure-cosmos        # Cosmos DB data-plane client
+azure-storage-blob  # blob reads when not using the trigger binding directly

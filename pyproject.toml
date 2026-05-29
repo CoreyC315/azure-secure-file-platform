@@ -1,0 +1,8 @@
+# pyproject.toml — Python tooling config for the repo.
+# Only pytest config for now; pythonpath=["app"] lets tests `import metadata` directly
+# without importing function_app.py (which requires the azure-functions runtime package).
+
+[tool.pytest.ini_options]
+pythonpath = ["app"]
+testpaths = ["app/tests"]
+addopts = "-q"

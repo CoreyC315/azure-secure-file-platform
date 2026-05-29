@@ -1,0 +1,13 @@
+{
+  "//": "Template for local development. Copy to local.settings.json (gitignored) and fill in. NEVER commit real values. In Azure these settings are injected by Terraform from module outputs; locally you point at your own dev resources or emulators.",
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "LandingStorage__accountName": "<your-dev-storage-account>",
+    "LandingStorage__credential": "managedidentity",
+    "COSMOS_ENDPOINT": "https://<your-dev-cosmos>.documents.azure.com:443/",
+    "COSMOS_DATABASE": "files",
+    "COSMOS_CONTAINER": "results"
+  }
+}
